@@ -1,0 +1,923 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Грузовые пластинчатые цепи на погрузчик | ЦепьПоставка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            padding-top: 120px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .collapsible2 {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background-color: #003366;
+        }
+        
+        .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+        
+        .bottom-bar {
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .contact-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 20s linear infinite;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+       
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        
+        .standards-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+      
+        
+        .standards-comparison {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .standard-card {
+            width: 48%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .standard-card h3 {
+            color: #003366;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .image-gallery {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .image-gallery img {
+            width: 48%;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .features-list {
+            columns: 2;
+            column-gap: 30px;
+            margin: 20px 0;
+        }
+        
+        
+        .features-list li {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+        
+        
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        /* Стили подвала */
+        .footer {
+            background-color: #003366;
+            color: white;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .callback-btn {
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .callback-btn:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Стили формы (аналогичные форме на странице контактов) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        
+
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .submit-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #002244;
+        }
+        
+        .required {
+            color: red;
+        }
+
+        .callback-btnn {
+            height: 35px;
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 0px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: -5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+      
+        
+        .order-btn:hover {
+            background-color: #ffd633;
+        }
+        
+        @media (max-width: 900px) {
+            .chains-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .chains-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .standards-comparison {
+                flex-direction: column;
+            }
+            
+            .standard-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .image-gallery {
+                flex-direction: column;
+            }
+            
+            .image-gallery img {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .features-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-bar">
+            <div class="logo"><a href="index.html">ЦепьПоставка</a>  </div>
+            <nav class="nav-links">
+                <a href="tsepi.html">Цепи</a>
+                <a href="stars.html">Звёздочки</a>
+                <a href="deliviry.html">Доставка и оплата</a>
+                <a href="contacts.html">Контакты</a>
+                 <button class="callback-btnn" id="openModalBtn">Заказать звонок</button>
+            </nav>
+        </div>
+        <div class="bottom-bar">
+            <div class="contact-marquee">
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Грузовые пластинчатые цепи на погрузчик</h1>
+        
+        
+        
+        <div class="standards-info">
+            <h2>Описание грузовых пластинчатых цепей</h2>
+            <p>Грузовые пластинчатые цепи предназначены для работы в тяжелых условиях эксплуатации на погрузчиках, подъемниках и другом складском оборудовании. Они отличаются высокой прочностью и износостойкостью.</p>
+            
+            <p>Основные особенности:</p>
+            <ul class="features-list">
+                <li style="margin-left: 25px;">Высокая грузоподъемность (до 50 тонн и более)</li>
+                <li style="margin-left: 25px;">Устойчивость к ударным нагрузкам</li>
+                <li style="margin-left: 25px;">Долгий срок службы даже при интенсивной эксплуатации</li>
+                <li style="margin-left: 25px;">Специальные покрытия для защиты от коррозии</li>
+                <li style="margin-left: 25px;">Возможность работы при температурах от -40°C до +150°C</li>
+                <li style="margin-left: 25px;">Различные варианты исполнения (калиброванные, некалиброванные, с упрочненными деталями)</li>
+                <li style="margin-left: 25px;">Стойкость к абразивному износу</li>
+                <li style="margin-left: 25px;">Минимальное растяжение в процессе эксплуатации</li>
+            </ul>
+        </div>
+        
+        <div class="standards-comparison">
+            <div class="standard-card">
+                <h3>ГОСТ 191-82</h3>
+                <p>Российский стандарт на грузовые пластинчатые цепи. Определяет основные параметры, размеры и технические требования к цепям для подъемно-транспортного оборудования.</p>
+                <p>Цепи по ГОСТ 191-82 широко применяются в погрузчиках отечественного производства и других видах подъемной техники.</p>
+                <p>Основные серии: ВК (калиброванные), ВНК (некалиброванные), ВУ (упрочненные).</p>
+            </div>
+            
+            <div class="standard-card">
+                <h3>DIN 5685/5687</h3>
+                <p>Немецкий стандарт на грузовые пластинчатые цепи. Используется в европейской технике и оборудовании.</p>
+                <p>Цепи DIN отличаются высокой точностью изготовления и применяются в ответственных механизмах с высокими нагрузками.</p>
+                <p>Основные типы: A (нормальные), B (усиленные), C (сверхпрочные).</p>
+            </div>
+        </div>
+        
+        <div class="standards-info">
+            <h2>Технические характеристики</h2>
+            <p>Основные параметры грузовых пластинчатых цепей:</p>
+            <ul>
+                <li style="margin-left: 25px;"><strong>Шаг цепи</strong> - расстояние между осями соседних звеньев (от 50 до 250 мм)</li>
+                <li style="margin-left: 25px;"><strong>Ширина цепи</strong> - расстояние между внутренними пластинами (от 30 до 200 мм)</li>
+                <li style="margin-left: 25px;"><strong>Диаметр валика</strong> - определяет прочность цепи (от 10 до 60 мм)</li>
+                <li style="margin-left: 25px;"><strong>Разрушающая нагрузка</strong> - минимальная нагрузка, при которой происходит разрушение цепи (от 50 до 1000 кН)</li>
+            </ul>
+        </div>
+        
+        <h2>Таблица параметров грузовых пластинчатых цепей</h2>
+        <button type="button" class="collapsible">Цепи BL (от BL422 до BL2088)</button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Обозначение цепи по ANSI</th>
+                <th>Шаг</th>
+                <th>Сочетание пластин</th>
+                <th>Высота пластины</th>
+                <th>Толщина пластины</th>
+                <th>Диаметр валика</th>
+                <th>Длина валика</th>
+                <th>Разрушающая нагрузка</th>
+                <th>Вес метра</th>
+            </tr>
+            <tr><td>BL422</td><td>50.80</td><td>2+1</td><td>38.10</td><td>5.72</td><td>11.10</td><td>22.20</td><td>63.5</td><td>4.2</td></tr>
+            <tr><td>BL428</td><td>50.80</td><td>2+1</td><td>47.63</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>7.5</td></tr>
+            <tr><td>BL520</td><td>63.50</td><td>2+1</td><td>47.63</td><td>5.72</td><td>11.10</td><td>22.20</td><td>63.5</td><td>4.8</td></tr>
+            <tr><td>BL525</td><td>63.50</td><td>2+1</td><td>57.15</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>8.3</td></tr>
+            <tr><td>BL530</td><td>63.50</td><td>2+1</td><td>66.68</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>13.2</td></tr>
+            <tr><td>BL630</td><td>76.20</td><td>2+1</td><td>66.68</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>9.1</td></tr>
+            <tr><td>BL635</td><td>76.20</td><td>2+1</td><td>76.20</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>14.5</td></tr>
+            <tr><td>BL640</td><td>76.20</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>20.8</td></tr>
+            <tr><td>BL735</td><td>88.90</td><td>2+1</td><td>76.20</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>15.2</td></tr>
+            <tr><td>BL740</td><td>88.90</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>21.8</td></tr>
+            <tr><td>BL745</td><td>88.90</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>30.4</td></tr>
+            <tr><td>BL840</td><td>101.60</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>23.1</td></tr>
+            <tr><td>BL845</td><td>101.60</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>32.2</td></tr>
+            <tr><td>BL850</td><td>101.60</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>43.1</td></tr>
+            <tr><td>BL945</td><td>114.30</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>34.0</td></tr>
+            <tr><td>BL950</td><td>114.30</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>45.4</td></tr>
+            <tr><td>BL955</td><td>114.30</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>59.0</td></tr>
+            <tr><td>BL1050</td><td>127.00</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>47.6</td></tr>
+            <tr><td>BL1055</td><td>127.00</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>61.7</td></tr>
+            <tr><td>BL1060</td><td>127.00</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>78.5</td></tr>
+            <tr><td>BL1155</td><td>139.70</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>64.4</td></tr>
+            <tr><td>BL1160</td><td>139.70</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>81.6</td></tr>
+            <tr><td>BL1165</td><td>139.70</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>101.2</td></tr>
+            <tr><td>BL1260</td><td>152.40</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>84.8</td></tr>
+            <tr><td>BL1265</td><td>152.40</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>104.9</td></tr>
+            <tr><td>BL1270</td><td>152.40</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>129.3</td></tr>
+            <tr><td>BL1365</td><td>165.10</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>108.0</td></tr>
+            <tr><td>BL1370</td><td>165.10</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>132.9</td></tr>
+            <tr><td>BL1375</td><td>165.10</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>160.1</td></tr>
+            <tr><td>BL1470</td><td>177.80</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>136.1</td></tr>
+            <tr><td>BL1475</td><td>177.80</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>163.8</td></tr>
+            <tr><td>BL1480</td><td>177.80</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>195.0</td></tr>
+            <tr><td>BL1575</td><td>190.50</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>167.8</td></tr>
+            <tr><td>BL1580</td><td>190.50</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>199.6</td></tr>
+            <tr><td>BL1585</td><td>190.50</td><td>2+1</td><td>171.45</td><td>25.40</td><td>49.21</td><td>98.43</td><td>1928.0</td><td>235.9</td></tr>
+            <tr><td>BL1680</td><td>203.20</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>203.2</td></tr>
+            <tr><td>BL1685</td><td>203.20</td><td>2+1</td><td>171.45</td><td>25.40</td><td>49.21</td><td>98.43</td><td>1928.0</td><td>240.4</td></tr>
+            <tr><td>BL1690</td><td>203.20</td><td>2+1</td><td>180.98</td><td>26.97</td><td>52.38</td><td>104.78</td><td>2268.0</td><td>281.2</td></tr>
+            <tr><td>BL2088</td><td>254.00</td><td>2+1</td><td>223.84</td><td>33.34</td><td>65.09</td><td>130.18</td><td>3629.0</td><td>453.6</td></tr>
+        </table>
+    </div>
+
+    <button type="button" class="collapsible">Цепи AL (от AL322 до AL1688)</button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Обозначение цепи по ANSI</th>
+                <th>Шаг</th>
+                <th>Сочетание пластин</th>
+                <th>Высота пластины</th>
+                <th>Толщина пластины</th>
+                <th>Диаметр валика</th>
+                <th>Длина валика</th>
+                <th>Разрушающая нагрузка</th>
+                <th>Вес метра</th>
+            </tr>
+            <tr><td>AL322</td><td>38.10</td><td>2+1</td><td>28.58</td><td>4.76</td><td>8.73</td><td>17.46</td><td>36.3</td><td>2.4</td></tr>
+            <tr><td>AL326</td><td>38.10</td><td>2+1</td><td>34.93</td><td>6.35</td><td>11.91</td><td>23.80</td><td>63.5</td><td>4.1</td></tr>
+            <tr><td>AL422</td><td>50.80</td><td>2+1</td><td>38.10</td><td>5.72</td><td>11.10</td><td>22.20</td><td>63.5</td><td>4.2</td></tr>
+            <tr><td>AL428</td><td>50.80</td><td>2+1</td><td>47.63</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>7.5</td></tr>
+            <tr><td>AL520</td><td>63.50</td><td>2+1</td><td>47.63</td><td>5.72</td><td>11.10</td><td>22.20</td><td>63.5</td><td>4.8</td></tr>
+            <tr><td>AL525</td><td>63.50</td><td>2+1</td><td>57.15</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>8.3</td></tr>
+            <tr><td>AL530</td><td>63.50</td><td>2+1</td><td>66.68</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>13.2</td></tr>
+            <tr><td>AL630</td><td>76.20</td><td>2+1</td><td>66.68</td><td>7.75</td><td>14.27</td><td>28.58</td><td>113.4</td><td>9.1</td></tr>
+            <tr><td>AL635</td><td>76.20</td><td>2+1</td><td>76.20</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>14.5</td></tr>
+            <tr><td>AL640</td><td>76.20</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>20.8</td></tr>
+            <tr><td>AL735</td><td>88.90</td><td>2+1</td><td>76.20</td><td>9.53</td><td>17.46</td><td>34.93</td><td>181.4</td><td>15.2</td></tr>
+            <tr><td>AL740</td><td>88.90</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>21.8</td></tr>
+            <tr><td>AL745</td><td>88.90</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>30.4</td></tr>
+            <tr><td>AL840</td><td>101.60</td><td>2+1</td><td>85.73</td><td>11.10</td><td>20.62</td><td>41.28</td><td>249.5</td><td>23.1</td></tr>
+            <tr><td>AL845</td><td>101.60</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>32.2</td></tr>
+            <tr><td>AL850</td><td>101.60</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>43.1</td></tr>
+            <tr><td>AL945</td><td>114.30</td><td>2+1</td><td>95.25</td><td>12.70</td><td>23.80</td><td>47.63</td><td>340.2</td><td>34.0</td></tr>
+            <tr><td>AL950</td><td>114.30</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>45.4</td></tr>
+            <tr><td>AL955</td><td>114.30</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>59.0</td></tr>
+            <tr><td>AL1050</td><td>127.00</td><td>2+1</td><td>104.78</td><td>14.27</td><td>26.97</td><td>53.98</td><td>453.6</td><td>47.6</td></tr>
+            <tr><td>AL1055</td><td>127.00</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>61.7</td></tr>
+            <tr><td>AL1060</td><td>127.00</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>78.5</td></tr>
+            <tr><td>AL1155</td><td>139.70</td><td>2+1</td><td>114.30</td><td>15.88</td><td>30.16</td><td>60.33</td><td>589.7</td><td>64.4</td></tr>
+            <tr><td>AL1160</td><td>139.70</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>81.6</td></tr>
+            <tr><td>AL1165</td><td>139.70</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>101.2</td></tr>
+            <tr><td>AL1260</td><td>152.40</td><td>2+1</td><td>123.83</td><td>17.46</td><td>33.34</td><td>66.68</td><td>748.4</td><td>84.8</td></tr>
+            <tr><td>AL1265</td><td>152.40</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>104.9</td></tr>
+            <tr><td>AL1270</td><td>152.40</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>129.3</td></tr>
+            <tr><td>AL1365</td><td>165.10</td><td>2+1</td><td>133.35</td><td>19.05</td><td>36.51</td><td>73.03</td><td>929.0</td><td>108.0</td></tr>
+            <tr><td>AL1370</td><td>165.10</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>132.9</td></tr>
+            <tr><td>AL1375</td><td>165.10</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>160.1</td></tr>
+            <tr><td>AL1470</td><td>177.80</td><td>2+1</td><td>142.88</td><td>20.62</td><td>39.68</td><td>79.38</td><td>1134.0</td><td>136.1</td></tr>
+            <tr><td>AL1475</td><td>177.80</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>163.8</td></tr>
+            <tr><td>AL1480</td><td>177.80</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>195.0</td></tr>
+            <tr><td>AL1575</td><td>190.50</td><td>2+1</td><td>152.40</td><td>22.23</td><td>42.86</td><td>85.73</td><td>1361.0</td><td>167.8</td></tr>
+            <tr><td>AL1580</td><td>190.50</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>199.6</td></tr>
+            <tr><td>AL1585</td><td>190.50</td><td>2+1</td><td>171.45</td><td>25.40</td><td>49.21</td><td>98.43</td><td>1928.0</td><td>235.9</td></tr>
+            <tr><td>AL1680</td><td>203.20</td><td>2+1</td><td>161.93</td><td>23.80</td><td>46.03</td><td>92.08</td><td>1633.0</td><td>203.2</td></tr>
+            <tr><td>AL1685</td><td>203.20</td><td>2+1</td><td>171.45</td><td>25.40</td><td>49.21</td><td>98.43</td><td>1928.0</td><td>240.4</td></tr>
+            <tr><td>AL1688</td><td>203.20</td><td>2+1</td><td>180.98</td><td>26.97</td><td>52.38</td><td>104.78</td><td>2268.0</td><td>281.2</td></tr>
+        </table>
+    </div>
+
+    <button type="button" class="collapsible">Цепи LH (от LH0822 до LH4088)</button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Обозначение цепи по ANSI</th>
+                <th>Шаг</th>
+                <th>Сочетание пластин</th>
+                <th>Высота пластины</th>
+                <th>Толщина пластины</th>
+                <th>Диаметр валика</th>
+                <th>Длина валика</th>
+                <th>Разрушающая нагрузка</th>
+                <th>Вес метра</th>
+            </tr>
+            <tr><td>LH0822</td><td>25.40</td><td>2+1</td><td>19.05</td><td>3.18</td><td>5.94</td><td>11.91</td><td>13.6</td><td>0.9</td></tr>
+            <tr><td>LH0826</td><td>25.40</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.5</td></tr>
+            <tr><td>LH1022</td><td>31.75</td><td>2+1</td><td>19.05</td><td>3.18</td><td>5.94</td><td>11.91</td><td>13.6</td><td>1.0</td></tr>
+            <tr><td>LH1026</td><td>31.75</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.6</td></tr>
+            <tr><td>LH1030</td><td>31.75</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>2.7</td></tr>
+            <tr><td>LH1226</td><td>38.10</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.7</td></tr>
+            <tr><td>LH1230</td><td>38.10</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>2.8</td></tr>
+            <tr><td>LH1234</td><td>38.10</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.3</td></tr>
+            <tr><td>LH1430</td><td>44.45</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>3.0</td></tr>
+            <tr><td>LH1434</td><td>44.45</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.5</td></tr>
+            <tr><td>LH1438</td><td>44.45</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>6.5</td></tr>
+            <tr><td>LH1634</td><td>50.80</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.8</td></tr>
+            <tr><td>LH1638</td><td>50.80</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>6.8</td></tr>
+            <tr><td>LH1642</td><td>50.80</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>9.5</td></tr>
+            <tr><td>LH1838</td><td>57.15</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>7.2</td></tr>
+            <tr><td>LH1842</td><td>57.15</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>10.0</td></tr>
+            <tr><td>LH1846</td><td>57.15</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>13.2</td></tr>
+            <tr><td>LH2042</td><td>63.50</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>10.5</td></tr>
+            <tr><td>LH2046</td><td>63.50</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>13.8</td></tr>
+            <tr><td>LH2050</td><td>63.50</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>17.8</td></tr>
+            <tr><td>LH2246</td><td>71.44</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>14.5</td></tr>
+            <tr><td>LH2250</td><td>71.44</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>18.6</td></tr>
+            <tr><td>LH2254</td><td>71.44</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>23.6</td></tr>
+            <tr><td>LH2450</td><td>76.20</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>19.3</td></tr>
+            <tr><td>LH2454</td><td>76.20</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>24.5</td></tr>
+            <tr><td>LH2458</td><td>76.20</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>30.8</td></tr>
+            <tr><td>LH2654</td><td>82.55</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>25.4</td></tr>
+            <tr><td>LH2658</td><td>82.55</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>31.9</td></tr>
+            <tr><td>LH2662</td><td>82.55</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>39.9</td></tr>
+            <tr><td>LH2858</td><td>88.90</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>33.1</td></tr>
+            <tr><td>LH2862</td><td>88.90</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>41.3</td></tr>
+            <tr><td>LH2866</td><td>88.90</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>50.8</td></tr>
+            <tr><td>LH3062</td><td>95.25</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>42.6</td></tr>
+            <tr><td>LH3066</td><td>95.25</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>52.2</td></tr>
+            <tr><td>LH3070</td><td>95.25</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>63.5</td></tr>
+            <tr><td>LH3266</td><td>101.60</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>53.6</td></tr>
+            <tr><td>LH3270</td><td>101.60</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>65.3</td></tr>
+            <tr><td>LH3274</td><td>101.60</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>79.4</td></tr>
+            <tr><td>LH3470</td><td>107.95</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>66.7</td></tr>
+            <tr><td>LH3474</td><td>107.95</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>80.8</td></tr>
+            <tr><td>LH3478</td><td>107.95</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>97.5</td></tr>
+            <tr><td>LH3674</td><td>114.30</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>82.6</td></tr>
+            <tr><td>LH3678</td><td>114.30</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>99.8</td></tr>
+            <tr><td>LH3682</td><td>114.30</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>119.7</td></tr>
+            <tr><td>LH3878</td><td>120.65</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>101.6</td></tr>
+            <tr><td>LH3882</td><td>120.65</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>121.9</td></tr>
+            <tr><td>LH3886</td><td>120.65</td><td>2+1</td><td>95.25</td><td>28.58</td><td>56.36</td><td>112.71</td><td>793.8</td><td>145.1</td></tr>
+            <tr><td>LH4082</td><td>127.00</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>123.8</td></tr>
+            <tr><td>LH4086</td><td>127.00</td><td>2+1</td><td>95.25</td><td>28.58</td><td>56.36</td><td>112.71</td><td>793.8</td><td>147.4</td></tr>
+            <tr><td>LH4088</td><td>127.00</td><td>2+1</td><td>100.01</td><td>30.16</td><td>59.53</td><td>119.06</td><td>929.0</td><td>176.9</td></tr>
+        </table>
+    </div>
+
+    <button type="button" class="collapsible2">Цепи LL (от LL0822 до LL4888)</button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Обозначение цепи по ANSI</th>
+                <th>Шаг</th>
+                <th>Сочетание пластин</th>
+                <th>Высота пластины</th>
+                <th>Толщина пластины</th>
+                <th>Диаметр валика</th>
+                <th>Длина валика</th>
+                <th>Разрушающая нагрузка</th>
+                <th>Вес метра</th>
+            </tr>
+            <tr><td>LL0822</td><td>25.40</td><td>2+1</td><td>19.05</td><td>3.18</td><td>5.94</td><td>11.91</td><td>13.6</td><td>0.9</td></tr>
+            <tr><td>LL0826</td><td>25.40</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.5</td></tr>
+            <tr><td>LL1022</td><td>31.75</td><td>2+1</td><td>19.05</td><td>3.18</td><td>5.94</td><td>11.91</td><td>13.6</td><td>1.0</td></tr>
+            <tr><td>LL1026</td><td>31.75</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.6</td></tr>
+            <tr><td>LL1030</td><td>31.75</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>2.7</td></tr>
+            <tr><td>LL1226</td><td>38.10</td><td>2+1</td><td>23.80</td><td>4.76</td><td>8.73</td><td>17.46</td><td>22.7</td><td>1.7</td></tr>
+            <tr><td>LL1230</td><td>38.10</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>2.8</td></tr>
+            <tr><td>LL1234</td><td>38.10</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.3</td></tr>
+            <tr><td>LL1430</td><td>44.45</td><td>2+1</td><td>28.58</td><td>6.35</td><td>11.91</td><td>23.80</td><td>36.3</td><td>3.0</td></tr>
+            <tr><td>LL1434</td><td>44.45</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.5</td></tr>
+            <tr><td>LL1438</td><td>44.45</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>6.5</td></tr>
+            <tr><td>LL1634</td><td>50.80</td><td>2+1</td><td>33.34</td><td>7.92</td><td>15.08</td><td>30.16</td><td>54.4</td><td>4.8</td></tr>
+            <tr><td>LL1638</td><td>50.80</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>6.8</td></tr>
+            <tr><td>LL1642</td><td>50.80</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>9.5</td></tr>
+            <tr><td>LL1838</td><td>57.15</td><td>2+1</td><td>38.10</td><td>9.53</td><td>18.26</td><td>36.51</td><td>77.1</td><td>7.2</td></tr>
+            <tr><td>LL1842</td><td>57.15</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>10.0</td></tr>
+            <tr><td>LL1846</td><td>57.15</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>13.2</td></tr>
+            <tr><td>LL2042</td><td>63.50</td><td>2+1</td><td>42.86</td><td>11.10</td><td>21.43</td><td>42.86</td><td>104.3</td><td>10.5</td></tr>
+            <tr><td>LL2046</td><td>63.50</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>13.8</td></tr>
+            <tr><td>LL2050</td><td>63.50</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>17.8</td></tr>
+            <tr><td>LL2246</td><td>71.44</td><td>2+1</td><td>47.63</td><td>12.70</td><td>24.61</td><td>49.21</td><td>136.1</td><td>14.5</td></tr>
+            <tr><td>LL2250</td><td>71.44</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>18.6</td></tr>
+            <tr><td>LL2254</td><td>71.44</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>23.6</td></tr>
+            <tr><td>LL2450</td><td>76.20</td><td>2+1</td><td>52.39</td><td>14.27</td><td>27.78</td><td>55.56</td><td>172.4</td><td>19.3</td></tr>
+            <tr><td>LL2454</td><td>76.20</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>24.5</td></tr>
+            <tr><td>LL2458</td><td>76.20</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>30.8</td></tr>
+            <tr><td>LL2654</td><td>82.55</td><td>2+1</td><td>57.15</td><td>15.88</td><td>30.96</td><td>61.91</td><td>213.2</td><td>25.4</td></tr>
+            <tr><td>LL2658</td><td>82.55</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>31.9</td></tr>
+            <tr><td>LL2662</td><td>82.55</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>39.9</td></tr>
+            <tr><td>LL2858</td><td>88.90</td><td>2+1</td><td>61.91</td><td>17.46</td><td>34.13</td><td>68.26</td><td>258.5</td><td>33.1</td></tr>
+            <tr><td>LL2862</td><td>88.90</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>41.3</td></tr>
+            <tr><td>LL2866</td><td>88.90</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>50.8</td></tr>
+            <tr><td>LL3062</td><td>95.25</td><td>2+1</td><td>66.68</td><td>19.05</td><td>37.31</td><td>74.61</td><td>308.4</td><td>42.6</td></tr>
+            <tr><td>LL3066</td><td>95.25</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>52.2</td></tr>
+            <tr><td>LL3070</td><td>95.25</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>63.5</td></tr>
+            <tr><td>LL3266</td><td>101.60</td><td>2+1</td><td>71.44</td><td>20.62</td><td>40.48</td><td>80.96</td><td>362.9</td><td>53.6</td></tr>
+            <tr><td>LL3270</td><td>101.60</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>65.3</td></tr>
+            <tr><td>LL3274</td><td>101.60</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>79.4</td></tr>
+            <tr><td>LL3470</td><td>107.95</td><td>2+1</td><td>76.20</td><td>22.23</td><td>43.66</td><td>87.31</td><td>421.8</td><td>66.7</td></tr>
+            <tr><td>LL3474</td><td>107.95</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>80.8</td></tr>
+            <tr><td>LL3478</td><td>107.95</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>97.5</td></tr>
+            <tr><td>LL3674</td><td>114.30</td><td>2+1</td><td>80.96</td><td>23.80</td><td>46.83</td><td>93.66</td><td>494.5</td><td>82.6</td></tr>
+            <tr><td>LL3678</td><td>114.30</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>99.8</td></tr>
+            <tr><td>LL3682</td><td>114.30</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>119.7</td></tr>
+            <tr><td>LL3878</td><td>120.65</td><td>2+1</td><td>85.73</td><td>25.40</td><td>50.01</td><td>100.01</td><td>580.6</td><td>101.6</td></tr>
+            <tr><td>LL3882</td><td>120.65</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>121.9</td></tr>
+            <tr><td>LL3886</td><td>120.65</td><td>2+1</td><td>95.25</td><td>28.58</td><td>56.36</td><td>112.71</td><td>793.8</td><td>145.1</td></tr>
+            <tr><td>LL4082</td><td>127.00</td><td>2+1</td><td>90.49</td><td>26.97</td><td>53.18</td><td>106.36</td><td>680.4</td><td>123.8</td></tr>
+            <tr><td>LL4086</td><td>127.00</td><td>2+1</td><td>95.25</td><td>28.58</td><td>56.36</td><td>112.71</td><td>793.8</td><td>147.4</td></tr>
+            <tr><td>LL4088</td><td>127.00</td><td>2+1</td><td>100.01</td><td>30.16</td><td>59.53</td><td>119.06</td><td>929.0</td><td>176.9</td></tr>
+            <tr><td>LL4286</td><td>133.35</td><td>2+1</td><td>95.25</td><td>28.58</td><td>56.36</td><td>112.71</td><td>793.8</td><td>149.7</td></tr>
+            <tr><td>LL4290</td><td>133.35</td><td>2+1</td><td>100.01</td><td>30.16</td><td>59.53</td><td>119.06</td><td>929.0</td><td>179.6</td></tr>
+            <tr><td>LL4294</td><td>133.35</td><td>2+1</td><td>104.78</td><td>31.75</td><td>62.71</td><td>125.41</td><td>1088.6</td><td>215.5</td></tr>
+            <tr><td>LL4490</td><td>139.70</td><td>2+1</td><td>100.01</td><td>30.16</td><td>59.53</td><td>119.06</td><td>929.0</td><td>181.4</td></tr>
+            <tr><td>LL4494</td><td>139.70</td><td>2+1</td><td>104.78</td><td>31.75</td><td>62.71</td><td>125.41</td><td>1088.6</td><td>217.7</td></tr>
+            <tr><td>LL4498</td><td>139.70</td><td>2+1</td><td>109.54</td><td>33.34</td><td>65.88</td><td>131.76</td><td>1265.5</td><td>260.8</td></tr>
+            <tr><td>LL4694</td><td>146.05</td><td>2+1</td><td>104.78</td><td>31.75</td><td>62.71</td><td>125.41</td><td>1088.6</td><td>220.0</td></tr>
+            <tr><td>LL4698</td><td>146.05</td><td>2+1</td><td>109.54</td><td>33.34</td><td>65.88</td><td>131.76</td><td>1265.5</td><td>263.5</td></tr>
+            <tr><td>LL4702</td><td>146.05</td><td>2+1</td><td>114.30</td><td>34.93</td><td>69.06</td><td>138.11</td><td>1451.5</td><td>312.1</td></tr>
+            <tr><td>LL4898</td><td>152.40</td><td>2+1</td><td>109.54</td><td>33.34</td><td>65.88</td><td>131.76</td><td>1265.5</td><td>266.7</td></tr>
+            <tr><td>LL4902</td><td>152.40</td><td>2+1</td><td>114.30</td><td>34.93</td><td>69.06</td><td>138.11</td><td>1451.5</td><td>315.7</td></tr>
+            <tr><td>LL4888</td><td>152.40</td><td>2+1</td><td>119.06</td><td>36.51</td><td>72.23</td><td>144.46</td><td>1665.0</td><td>374.2</td></tr>
+        </table>
+    </div>
+        
+        <div  class="standards-info">
+            <h2>Рекомендации по выбору и эксплуатации</h2>
+            <p>При выборе грузовой пластинчатой цепи для погрузчика необходимо учитывать:</p>
+            <ol>
+                <li style="margin-left: 25px;">Максимальную рабочую нагрузку с запасом прочности не менее 5:1</li>
+                <li style="margin-left: 25px;">Условия эксплуатации (температура, влажность, наличие агрессивных сред)</li>
+                <li style="margin-left: 25px;">Частоту циклов работы</li>
+                <li style="margin-left: 25px;">Совместимость с имеющимся оборудованием</li>
+                <li style="margin-left: 25px;">Требования к точности позиционирования</li>
+            </ol>
+            <p>Для продления срока службы цепи рекомендуется:</p>
+            <ul>
+                <li style="margin-left: 25px;">Регулярно проводить смазку цепи специальными составами</li>
+                <li style="margin-left: 25px;">Контролировать степень износа и натяжение цепи</li>
+                <li style="margin-left: 25px;">Избегать перегрузок и ударных воздействий</li>
+                <li style="margin-left: 25px;">Своевременно заменять изношенные цепи</li>
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-contact">
+                    <span class="footer-icon">📞</span>
+                    <div>
+                        <strong>Телефон:</strong> +7 (965) 222-34-12
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">🕒</span>
+                    <div>
+                        <strong>Режим работы:</strong> Пн-Пт: 9:00-17:30
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">✉️</span>
+                    <div>
+                        <strong>Email:</strong> info@cep-postavka.ru
+                    </div>
+                </div>
+            </div>
+            
+            <button class="callback-btn" id="openModalBtn1">Заказать звонок</button>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 ООО "ЦепьПоставка". Все права защищены.
+        </div>
+    </footer>
+    
+    <!-- Модальное окно с формой -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Обратная связь</h2>
+            <form id="callbackForm">
+                <div class="form-group">
+                    <label for="modal-name">Имя <span class="required">*</span></label>
+                    <input type="text" id="modal-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-phone">Телефон <span class="required">*</span></label>
+                    <input type="tel" id="modal-phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-email">Email <span class="required">*</span></label>
+                    <input type="email" id="modal-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-message">Сообщение</label>
+                    <textarea id="modal-message" name="message"></textarea>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="modal-agreement" name="agreement" required>
+                    <label for="modal-agreement">Я согласен на сбор и обработку персональных данных <span class="required">*</span></label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+    
+    
+
+
+
+
+
+    <script>
+            // Открытие модального окна
+        document.getElementById('openModalBtn').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+        
+        // Закрытие модального окна
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'none';
+        });
+        
+        // Закрытие при клике вне окна
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('callbackModal')) {
+                document.getElementById('callbackModal').style.display = 'none';
+            }
+        });
+        
+        // Обработка формы (можно заменить на реальную отправку)
+        document.getElementById('callbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Форма отправлена! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('callbackModal').style.display = 'none';
+            this.reset();
+        });
+          document.getElementById('openModalBtn1').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+
+
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+          var coll = document.getElementsByClassName("collapsible2");
+        var i;
+        
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+
+
+
+
+
+
+            
+
+
+    </script>
+</body>
+</html>

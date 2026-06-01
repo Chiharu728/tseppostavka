@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цепи пластинчатые конвейерные | ЦепьПоставка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background-color: #003366;
+        }
+        
+        .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+        
+        .bottom-bar {
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .contact-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 20s linear infinite;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        body {
+            padding-top: 120px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        
+        .standards-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .image-gallery {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        
+        .image-gallery img {
+            width: calc(33.333% - 14px);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .pdf-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #003366;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            text-align: center;
+            min-height: 60px;
+        }
+        
+        .pdf-btn:hover {
+            background-color: #0055a5;
+        }
+        
+        .features-list {
+            columns: 2;
+            column-gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+         .content {
+            flex: 1;
+        }
+        
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        /* Стили подвала */
+        .footer {
+            background-color: #003366;
+            color: white;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .callback-btn {
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .callback-btn:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Стили формы (аналогичные форме на странице контактов) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .submit-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #002244;
+        }
+        
+        .required {
+            color: red;
+        }
+
+        .callback-btnn {
+            height: 35px;
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 0px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: -5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .image-gallery {
+                flex-direction: column;
+            }
+            
+            .image-gallery img {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .pdf-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-bar">
+            <div class="logo"><a href="index.html">ЦепьПоставка</a>  </div>
+            <nav class="nav-links">
+                <a href="tsepi.html">Цепи</a>
+                <a href="stars.html">Звёздочки</a>
+                <a href="deliviry.html">Доставка и оплата</a>
+                <a href="contacts.html">Контакты</a>
+                 <button class="callback-btnn" id="openModalBtn">Заказать звонок</button>
+            </nav>
+        </div>
+        <div class="bottom-bar">
+            <div class="contact-marquee">
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Цепи пластинчатые конвейерные</h1>
+        
+        <div class="image-gallery">
+            <img src="https://tsepi.su/wp-content/uploads/2015/05/IMG_7783-m-300x205.jpg" alt="Цепи M series">
+            <img src="https://tsepi.su/wp-content/uploads/2015/05/IMG_7745-m-300x180.jpg" alt="Цепи FV series">
+            <img src="https://tsepi.su/wp-content/uploads/2015/05/IMG_7643-l-m-300x200.jpg" alt="Цепи Z series">
+        </div>
+        
+        <div class="standards-info">
+            <h2>Каталоги продукции</h2>
+            <div class="pdf-buttons">
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-M-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (M series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-MT-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (MT series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-MC-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (MC series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-FV-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (FV series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-FVT-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (FVT series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-FVC-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (FVC series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-Z-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (Z series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-ZC-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (ZC series)</a>
+                <a href="https://tsepi.su/wp-content/uploads/2015/05/%D0%A2%D1%8F%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-ZE-series.pdf" class="pdf-btn">Тяговые конвейерные цепи (ZE series)</a>
+            </div>
+        </div>
+        
+        <div class="standards-info">
+            <h2>Сфера применения</h2>
+            <p>Пластинчатые конвейерные цепи находят применение в различных отраслях промышленности:</p>
+            <ul class="features-list">
+                <li style="margin-left: 25px;"><strong>Горнодобывающая промышленность:</strong> транспортировка руды, угля, горной массы</li>
+                <li style="margin-left: 25px;"><strong>Металлургия:</strong> перемещение горячих заготовок, металлического лома</li>
+                <li style="margin-left: 25px;"><strong>Цементная промышленность:</strong> транспортировка клинкера, сырьевых материалов</li>
+                <li style="margin-left: 25px;"><strong>Энергетика:</strong> подача топлива, удаление золы и шлака</li>
+                <li style="margin-left: 25px;"><strong>Химическая промышленность:</strong> перемещение гранулированных продуктов</li>
+                <li style="margin-left: 25px;"><strong>Пищевая промышленность:</strong> гигиеничные цепи для транспортировки продуктов</li>
+                <li style="margin-left: 25px;"><strong>Деревообработка:</strong> перемещение щепы, опилок, древесных отходов</li>
+                <li style="margin-left: 25px;"><strong>Строительная индустрия:</strong> транспортировка строительных материалов</li>
+                <li style="margin-left: 25px;"><strong>Переработка отходов:</strong> перемещение ТБО, промышленных отходов</li>
+                <li style="margin-left: 25px;"><strong>Автомобилестроение:</strong> сборочные конвейеры</li>
+                <li style="margin-left: 25px;"><strong>Сельское хозяйство:</strong> транспортировка зерна, кормов</li>
+                <li style="margin-left: 25px;"><strong>Портовая инфраструктура:</strong> погрузка/разгрузка сыпучих материалов</li>
+            </ul>
+        </div>
+        
+        <div class="standards-info">
+            <h2>Особенности и преимущества</h2>
+            <ul class="features-list">
+                <li style="margin-left: 25px;">Высокая грузоподъемность и износостойкость</li>
+                <li style="margin-left: 25px;">Устойчивость к ударным и переменным нагрузкам</li>
+                <li style="margin-left: 25px;">Долгий срок службы в тяжелых условиях эксплуатации</li>
+                <li style="margin-left: 25px;">Различные варианты исполнения (стандартное, усиленное, коррозионностойкое)</li>
+                <li style="margin-left: 25px;">Возможность работы при высоких и низких температурах</li>
+                <li style="margin-left: 25px;">Разнообразие типов пластин и креплений для различных задач</li>
+                <li style="margin-left: 25px;">Специальные исполнения для пищевой промышленности</li>
+                <li style="margin-left: 25px;">Минимальное техническое обслуживание</li>
+                <li style="margin-left: 25px;">Возможность ремонта и замены отдельных элементов</li>
+                <li style="margin-left: 25px;">Широкий диапазон размеров и шагов цепи</li>
+                <li style="margin-left: 25px;">Совместимость с различными типами звездочек и приводов</li>
+                <li style="margin-left: 25px;">Сниженное энергопотребление благодаря оптимизированной конструкции</li>
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-contact">
+                    <span class="footer-icon">📞</span>
+                    <div>
+                        <strong>Телефон:</strong> +7 (965) 222-34-12
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">🕒</span>
+                    <div>
+                        <strong>Режим работы:</strong> Пн-Пт: 9:00-17:30
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">✉️</span>
+                    <div>
+                        <strong>Email:</strong> info@cep-postavka.ru
+                    </div>
+                </div>
+            </div>
+            
+            <button class="callback-btn" id="openModalBtn1">Заказать звонок</button>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 ООО "ЦепьПоставка". Все права защищены.
+        </div>
+    </footer>
+    
+    <!-- Модальное окно с формой -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Обратная связь</h2>
+            <form id="callbackForm">
+                <div class="form-group">
+                    <label for="modal-name">Имя <span class="required">*</span></label>
+                    <input type="text" id="modal-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-phone">Телефон <span class="required">*</span></label>
+                    <input type="tel" id="modal-phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-email">Email <span class="required">*</span></label>
+                    <input type="email" id="modal-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-message">Сообщение</label>
+                    <textarea id="modal-message" name="message"></textarea>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="modal-agreement" name="agreement" required>
+                    <label for="modal-agreement">Я согласен на сбор и обработку персональных данных <span class="required">*</span></label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Открытие модального окна
+        document.getElementById('openModalBtn').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+        
+        // Закрытие модального окна
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'none';
+        });
+        
+        // Закрытие при клике вне окна
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('callbackModal')) {
+                document.getElementById('callbackModal').style.display = 'none';
+            }
+        });
+        
+        // Обработка формы (можно заменить на реальную отправку)
+        document.getElementById('callbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Форма отправлена! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('callbackModal').style.display = 'none';
+            this.reset();
+        });
+          document.getElementById('openModalBtn1').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+
+    </script>
+</body>
+</html>

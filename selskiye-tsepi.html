@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сельхоз цепи - ЦепьПоставка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background-color: #003366;
+        }
+        
+        .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+        
+        .bottom-bar {
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .contact-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 20s linear infinite;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        body {
+            padding-top: 120px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .content {
+            flex: 1;
+        }
+        
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        /* Стили подвала */
+        .footer {
+            background-color: #003366;
+            color: white;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .callback-btn {
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .callback-btn:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Стили формы (аналогичные форме на странице контактов) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .submit-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #002244;
+        }
+        
+        .required {
+            color: red;
+        }
+
+        h1, h2, h3 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .product-image {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+        
+
+        
+        .catalog-btn {
+            display: block;
+            width: 300px;
+            margin: 40px auto;
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .catalog-btn:hover {
+            background-color: #ffcc00;
+            color: #003366;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-list {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .product-list h2 {
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+        }
+        
+        .product-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .category {
+            flex: 1 1 300px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #003366;
+        }
+        
+        .category h3 {
+            margin-bottom: 15px;
+            color: #003366;
+        }
+        
+        .equipment-list {
+            columns: 2;
+            column-gap: 30px;
+        }
+        .callback-btnn {
+            height: 35px;
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 0px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: -5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        @media (max-width: 600px) {
+            .equipment-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="height: 50px;" class="header">
+        <div class="top-bar">
+           <div class="logo"><a href="index.html">ЦепьПоставка</a>  </div>
+            <nav class="nav-links">
+                <a href="privod-rolik-tsepi.html">Цепи</a>
+                <a href="stars.html">Звёздочки</a>
+                <a href="deliviry.html">Доставка и оплата</a>
+                <a href="contacts.html">Контакты</a>
+                 <button class="callback-btnn" id="openModalBtn2">Заказать звонок</button>
+            </nav>
+        </div>
+        <div class="bottom-bar">
+            <div class="contact-marquee">
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12 | 
+                Контакты: info@cep-postavka.ru | +7 (965) 222-34-12
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Сельскохозяйственные цепи</h1>
+        
+        <div class="product-gallery">
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/%D0%BF%D1%80%D0%B8%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-450x300.jpg" alt="Цепи для комбайнов">
+            </div>
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/%D0%BC%D1%8B%D1%81%D0%BE%D0%B2%D1%8B%D0%B5-%D1%86%D0%B5%D0%BF%D0%B8-450x337.jpg" alt="Элеваторные цепи">
+            </div>
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/IMG_0037__.jpg" alt="Цепи для жаток">
+            </div>
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B5%D1%80-%D0%BD%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80%D1%8B.jpg" alt="Транспортерные цепи">
+            </div>
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/%D1%86%D0%B5%D0%BF%D0%B8-%D0%BD%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80%D1%8B.jpg" alt="Цепи для пресс-подборщиков">
+            </div>
+            <div class="product-image">
+                <img src="https://tsepi.su/wp-content/uploads/2023/07/%D0%B7%D0%B5%D1%80%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D0%B8-%D0%BA%D0%BE%D0%BB%D0%BE%D1%81%D0%BE%D0%B2%D0%BE%D0%B9-%D1%8D%D0%BB%D0%B5%D0%B2%D0%B0%D1%82%D0%BE%D1%80.jpg" alt="Цепи для кормораздатчиков">
+            </div>
+        </div>
+        
+        <a href="https://tsepi.su/wp-content/uploads/2015/05/Selskohozyaystvennie_tsepi.pdf" class="catalog-btn" download>Скачать каталог сельхоз цепей (PDF)</a>
+        
+        <div class="product-list">
+            <h2>В нашем ассортименте:</h2>
+            <div class="product-categories">
+                <div class="category">
+                    <h3>Основные типы цепей</h3>
+                    <ul>
+                        <li style="margin-left: 25px;">Приводные цепи для комбайнов</li>
+                        <li style="margin-left: 25px;">Цепи наклонной камеры</li>
+                        <li style="margin-left: 25px;">Цепи элеваторов зернового и колосового</li>
+                        <li style="margin-left: 25px;">Транспортер наклонной камеры</li>
+                        <li style="margin-left: 25px;">Зерновые и колосовые элеваторы</li>
+                        <li style="margin-left: 25px;">Цепи на пресс-подборщик</li>
+                        <li style="margin-left: 25px;">Цепи для жаток (мысовые цепи)</li>
+                        <li style="margin-left: 25px;">Цепи для кормораздатчика</li>
+                        <li style="margin-left: 25px;">Приводные цепи для сеялочного оборудования</li>
+                    </ul>
+                </div>
+                
+                <div class="category">
+                    <h3>Для сельхозтехники</h3>
+                    <ul class="equipment-list">
+                        <li style="margin-left: 25px;">Комбайны для уборки пшеницы</li>
+                        <li style="margin-left: 25px;">Комбайны для кукурузы</li>
+                        <li style="margin-left: 25px;">Комбайны для картофеля</li>
+                        <li style="margin-left: 25px;">Жатки для кукурузы</li>
+                        <li style="margin-left: 25px;">Жатки для подсолнечника</li>
+                        <li style="margin-left: 25px;">Пресс-подборщики</li>
+                        <li style="margin-left: 25px;">Кормораздатчики</li>
+                        <li style="margin-left: 25px;">Сеялки</li>
+                        <li style="margin-left: 25px;">Культиваторы</li>
+                        <li style="margin-left: 25px;">Уборочные машины фруктов</li>
+                        <li style="margin-left: 25px;">Уборочные машины овощей</li>
+                        <li style="margin-left: 25px;">Зерноперерабатывающие машины</li>
+                        <li style="margin-left: 25px;">Сушильные машины</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-list">
+            <h2>Преимущества наших сельхоз цепей</h2>
+            <ul>
+                <li style="margin-left: 25px;"><strong>Износостойкость</strong> - специальная термообработка увеличивает срок службы</li>
+                <li style="margin-left: 25px;"><strong>Коррозионная стойкость</strong> - защитные покрытия для работы в агрессивных средах</li>
+                <li style="margin-left: 25px;"><strong>Высокая прочность</strong> - выдерживают экстремальные нагрузки</li>
+                <li style="margin-left: 25px;"><strong>Точность изготовления</strong> - полное соответствие ГОСТ и международным стандартам</li>
+                <li style="margin-left: 25px;"><strong>Широкий ассортимент</strong> - цепи для всех видов сельхозтехники</li>
+                <li style="margin-left: 25px;"><strong>Гарантия качества</strong> - все изделия проходят многоступенчатый контроль</li>
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-contact">
+                    <span class="footer-icon">📞</span>
+                    <div>
+                        <strong>Телефон:</strong> +7 (965) 222-34-12
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">🕒</span>
+                    <div>
+                        <strong>Режим работы:</strong> Пн-Пт: 9:00-17:30
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span class="footer-icon">✉️</span>
+                    <div>
+                        <strong>Email:</strong> info@cep-postavka.ru
+                    </div>
+                </div>
+            </div>
+            
+            <button class="callback-btn" id="openModalBtn">Заказать звонок</button>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 ООО "ЦепьПоставка". Все права защищены.
+        </div>
+    </footer>
+    
+    <!-- Модальное окно с формой -->
+    <div id="callbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Обратная связь</h2>
+            <form id="callbackForm">
+                <div class="form-group">
+                    <label for="modal-name">Имя <span class="required">*</span></label>
+                    <input type="text" id="modal-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-phone">Телефон <span class="required">*</span></label>
+                    <input type="tel" id="modal-phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-email">Email <span class="required">*</span></label>
+                    <input type="email" id="modal-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modal-message">Сообщение</label>
+                    <textarea id="modal-message" name="message"></textarea>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="modal-agreement" name="agreement" required>
+                    <label for="modal-agreement">Я согласен на сбор и обработку персональных данных <span class="required">*</span></label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Открытие модального окна
+        document.getElementById('openModalBtn').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+        
+        // Закрытие модального окна
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'none';
+        });
+        
+        // Закрытие при клике вне окна
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('callbackModal')) {
+                document.getElementById('callbackModal').style.display = 'none';
+            }
+        });
+        
+        // Обработка формы (можно заменить на реальную отправку)
+        document.getElementById('callbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Форма отправлена! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('callbackModal').style.display = 'none';
+            this.reset();
+        });
+          document.getElementById('openModalBtn').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+         document.getElementById('openModalBtn2').addEventListener('click', function() {
+            document.getElementById('callbackModal').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
